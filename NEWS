@@ -1,0 +1,15 @@
+perlmod_bldr -- See ChangeLog
+
+Copyright (C) 2008, Lee Thompson
+
+Sep 08 - Open Sourced under basic MIT license on GITHUB.  Lee wrote
+         a more generic man page filter
+Aug 08 - Mike Espe found the perl package and the perlmod_core package
+         were conflicting on man pages and filtered those files out
+May 08 - Mike Espe contributed patches to move installation into the
+         vendor_perl directory so that perl modules included with perl
+         can be upgraded with this module builder and not conflict
+Feb 08 - perl 5.10.0 has CPANPLUS allowing a from source CPAN bundle
+         which can build and install in a DESTDIR.  While source release
+         requires network access, compilation does not as a filesystem
+         based CPAN repo is contained in the release tarball.

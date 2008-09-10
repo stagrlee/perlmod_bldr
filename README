@@ -1,0 +1,91 @@
+perlmod_bldr
+============
+
+The Perl Module Builder package uses the improved CPANPLUS mechanism of CPAN
+to harvest the CPAN modules needed and store them in a local CPAN repo.
+This local repo and some scripts are tar'd with the autoconf "make dist" 
+mechanism.  This defines a versioned release of a group of CPAN perl modules.
+
+The release is now a package just like any other autotools package that can be
+unpacked, configured with "./configure" and installed.
+
+This pacakge was long in coming and took alot of "experimentation"...
+
+CPAN doesn't really like the concept of what the Free Software Foundation calls
+a "Staged Install".  The scripts in this package have to bend over backwards to 
+get CPANPLUS to setup perl to deal with the DESTDIR scratch directory as a 
+installation target prior to packaging.  Also got the tests to run in the staged
+install directory so you are resonably sure your are getting the software
+functioning like the developer upstream intended.
+
+
+
+This package is currently very early...
+It doesn't yet deal with firewall proxies.
+   This is a bootstrap problem as you need several perlmods to interact
+   with a proxy and you need to force LWP as a transport.
+It doesn't yet deal with itself being installed!!!
+   This may get tricky to fix...
+Doesn't yet modularize CPAN modules into package groups
+Is a first attempt from a non-perl coder (Lee Thompson)
+
+That said, it is potentially a cure for numerous problems.
+
+1) Give you versioned releases of bundles of perl modules and, since it is
+   versioned, gives you an easy backout if the upgrades introduce side 
+   effects.
+2) Very easy to get current with the latest upgrades introduced on CPAN
+   by updating the version in "configure.ac" and running "configure_pkg.sh"
+3) This technique defends against a scary phenomena where perl modules
+   dissapear off of CPAN.  We have had apps running against old versions
+   of perl modules which could not be upgraded for various reasons to 
+   the latest version of the depedent perl modules.  When you use this 
+   package, you have all the source code of your upstream dependencies.
+4) Adding to this bundle, while not as straightforward as rubygems_bldr,
+   is somewhat straightforward for most perl modules on cpan.
+5) Supports what the free software foundation calls a "staged install"
+   http://www.gnu.org/software/automake/manual/html_node/DESTDIR.html#DESTDIR
+   Staged install is a mandatory feature for package managers like
+   RPM, gentoo, debian...
+
+Errata...
+
+1) You have to hit carraige return a few times during the CPANPLUS fetches.
+   A decent perl programmer should be able to figure this out.  Somewhat
+   aleviated by autconf script redirecting STDIN when calling the 
+   get_cpan_modules.pl script...
+2) RPM2 should be left out until CPANPLUS can deal with patches.  RPM2 only
+   runs on linux at current time even though RPM is portable to Mac, Solaris,
+   Cygwin, etc
+3) As mentioned, this doesn't work yet underneath the firewall, this should be
+   addressed as soon as possible somehow.  Has a bootstrap issue as you have
+   to get several perl modules before you can get SOCKS5 support
+4) The package knows that it can't run if it is already installed and does
+   some basic checks and bails out if an installation is detected.
+
+Five anti-patterns were seen in upstream CPAN modules
+
+1) Unspecified dependencies; DBIx::Recordset for instance
+2) Fails to complete tests properly
+3) Module needs user input like "Yes", "No" or simple carraige return
+4) Circular dependencies (DateTime and DateTime::TimeZone for example)
+5) Even though a module has Build.PL implemented, it won't work unless
+   the older "makemaker" Makefile.PL build script is used.
+
+An idea I had was to implement a Perl object CPANPLUS::Stager which
+would take a hash of perlmodule names and flags specifying 
+
+    o  build phase (deals with missing or circular deps)
+    o  skiptest
+    o  STDIN input
+    o  makemaker use
+    o  Proxy server, username, password
+
+Another idea is to investigate the CPANPLUS distribution support, see
+"cpan2dist", "CPANPLUS::Dist::Deb", "CPANPLUS::Dist::Build", and 
+"CPANPLUS::Dist::Sample"
+
+
+
+                        Lee Thompson
+                        20-Feb-2008

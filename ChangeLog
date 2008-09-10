@@ -1,0 +1,8 @@
+0.4   : 10Sep08 : More generic manpage conflict loop and open sourced
+0.3.5 : 29Aug08 : Fix vendor_site install conflict with manpages.
+0.3.4 : 17Aug08 : Add XML::DOM::XPath
+0.3.3 : 16May08 : need FCGI. Change to use vendor space to eliminate conflicts with updated modules in the main perl package
+0.3.2 : 23Apr08 : need XML::SAX and Devel::Symdump
+0.3.1 : 23Apr08 : need XML::Simple 
+0.2   : 16Feb08 : use Bash 2.0.5 syntax, Test::Simple already in Perl 5.10.0
+0.1   : 15Feb08 : Initial concept, pretty rough

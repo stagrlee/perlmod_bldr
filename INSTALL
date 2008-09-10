@@ -1,0 +1,20 @@
+Installation Instructions
+*************************
+
+Copyright (C) 2008, Lee Thompson
+Basic MIT license
+
+Basic Installation
+==================
+
+  1. ./configure --prefix=/usr/local --with-perl=/usr/local
+
+  2. Type `make' to build the package.
+
+  3. Type `make install' to install the programs and any data files and
+     documentation.  You can install into a temp directory using the DESTDIR
+     staged install mechanism of autoconf like so.  This is useful for
+     putting the output in a package.
+
+         make DESTDIR=/tmp/pkgdir install
+

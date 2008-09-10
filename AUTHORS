@@ -1,0 +1,15 @@
+Authors of perlmod_bldr
+
+Created by Lee Thompson
+
+See also the files THANKS and ChangeLog.
+
+Note - this package contains a bundle of numerous perl modules written and
+maintained by numerous PERL developers and hosted on CPAN.org.  The source
+release of all these upstream works is contained in their intirety.
+
+
+Lee Thompson, while installing perl 5.10.0, caught the addition of CPANPLUS
+into the main perl package which inspired the creation of a "from source"
+perl module bundling and release mechanism
+

@@ -1,0 +1,28 @@
+#!/usr/bin/env perl
+use strict;
+use warnings;
+use File::Find;
+
+my @mods;
+
+my ($n, $i);
+
+find(\&wanted, @INC);
+
+@mods = sort {lc($a) cmp lc($b)} @mods;
+
+$n = @mods;
+foreach (@mods) { print "$_\n"; }
+
+sub wanted {
+  if ($File::Find::name =~ /\.pm$/) {
+    open(F, $File::Find::name) || return;
+    while(<F>) {
+      if (/^ *package +(\S+);/) {
+        push (@mods, $1);
+        last;
+      }
+    }
+    close(F);
+  }
+}
