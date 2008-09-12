@@ -7,7 +7,7 @@
 #
 #####################################
 
-EXTRA_DIST = configure_pkg.sh created.txt
+EXTRA_DIST = configure_pkg.sh
 
 #dist_pkgdata_DATA=README
 dist_bin_SCRIPTS=get_cpan_modules.pl querymods_cpanp.pl querymods_fs.pl
@@ -44,28 +44,14 @@ install-data-hook: get_cpan_STDIN.txt
 	./get_cpan_modules.pl < get_cpan_STDIN.txt; \
 	rsync -qr $(srcdir)/cpan $(DESTDIR)$(pkgdatadir); \
 	find $(DESTDIR)$(pkgdatadir) -name "*tar.gz" |xargs chmod 664; \
-	rm -f $(DESTDIR)$(mandir)/man3/Compress::Raw::Zlib.3 \
-	      $(DESTDIR)$(mandir)/man3/Compress::Zlib.3 \
-	      $(DESTDIR)$(mandir)/man3/File::GlobMapper.3 \
-	      $(DESTDIR)$(mandir)/man3/IO::Compress::Base.3 \
-	      $(DESTDIR)$(mandir)/man3/IO::Compress::Deflate.3 \
-	      $(DESTDIR)$(mandir)/man3/IO::Compress::Gzip.3 \
-	      $(DESTDIR)$(mandir)/man3/IO::Compress::RawDeflate.3 \
-	      $(DESTDIR)$(mandir)/man3/IO::Compress::Zip.3 \
-	      $(DESTDIR)$(mandir)/man3/IO::Uncompress::AnyInflate.3 \
-	      $(DESTDIR)$(mandir)/man3/IO::Uncompress::AnyUncompress.3 \
-	      $(DESTDIR)$(mandir)/man3/IO::Uncompress::Base.3 \
-	      $(DESTDIR)$(mandir)/man3/IO::Uncompress::Gunzip.3 \
-	      $(DESTDIR)$(mandir)/man3/IO::Uncompress::Inflate.3 \
-	      $(DESTDIR)$(mandir)/man3/IO::Uncompress::RawInflate.3 \
-	      $(DESTDIR)$(mandir)/man3/IO::Uncompress::Unzip.3 \
-	      $(DESTDIR)$(mandir)/man3/Test::Builder.3 \
-	      $(DESTDIR)$(mandir)/man3/Test::Builder::Module.3 \
-	      $(DESTDIR)$(mandir)/man3/Test::Builder::Tester.3 \
-	      $(DESTDIR)$(mandir)/man3/Test::Builder::Tester::Color.3 \
-	      $(DESTDIR)$(mandir)/man3/Test::More.3 \
-	      $(DESTDIR)$(mandir)/man3/Test::Simple.3 \
-	      $(DESTDIR)$(mandir)/man3/Test::Tutorial.3;
+	pushd ${mandir}; \
+	for i in $$(find . -type f -print); do \
+	  if test -f $$i && test -e ${DESTDIR}${mandir}/$$i; then \
+	    echo "Removing ${DESTDIR}${mandir}/$$i"; \
+	    rm -f ${DESTDIR}${mandir}/$$i; \
+	  fi; \
+	done; \
+	popd;
 
 clean:
 	-@rm -rf DESTDIR cpanplus get_cpan_STDIN.txt
