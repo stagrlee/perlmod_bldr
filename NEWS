@@ -1,6 +1,7 @@
 perlmod_bldr -- See ChangeLog
 
 Copyright (C) 2008, Lee Thompson
+Basic MIT license
 
 Sep 08 - Open Sourced under basic MIT license on GITHUB.  Lee wrote
          a more generic man page filter
