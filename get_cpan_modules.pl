@@ -231,7 +231,7 @@ $cb->install(
 # Deal with some modules that think they are "special"
 # Perl template toolkit needs a extras prefix defined
 $conf->set_conf( makeflags => 
-    "$mymkf TT_PREFIX=$destdir/opt/etrade/p6/share/tt2extras TT_ACCEPT=1" );
+    "$mymkf TT_PREFIX=$destdir$Config{'prefix'}/share/tt2extras TT_ACCEPT=1" );
 $cb->install( modules => [ qw( Template ) ] ) || die "install of Template failed";
 # The DBI Plugin, specifying perl worked....
 # another weird thing is you can't run Template and Template::Plugin:DBI at the same time
