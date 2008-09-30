@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!@PERL_HOME@/bin/perl
 use strict;
 use warnings;
 use File::Find;

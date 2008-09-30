@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!@PERL_HOME@/bin/perl
 # This script is a packaging bridge between the perl CPAN package system
 # and a package system other than CPAN.  It takes a list of PERL modules
 # you want and has CPAN retrieve them, and most importantly, all of those
@@ -14,6 +14,9 @@
 # skill shapes this up into something better.  We should add proxy support
 # so this works inside the firewall for instance.  See TODO entries
 #                                 Lee Thompson 15FEB08
+
+# get install prefix, could be different than perl itself
+
 use strict;
 use warnings;
 
@@ -44,6 +47,8 @@ my $result = GetOptions ( "net" => \$net );
 # the new modules.  This staged dir needs to get specified all over the
 # place in order for installs and tests to work
 my $destdir= $DESTDIR ? $DESTDIR : "$cwd/DESTDIR";
+my $PERL_HOME = "@PERL_HOME@";
+my $prefix = "@prefix@";
 my @myINC = (
     "$destdir$Config{'archlib'}",
     "$destdir$Config{'privlib'}",
@@ -52,9 +57,21 @@ my @myINC = (
     "$destdir$Config{'vendorarch'}",
     "$destdir$Config{'vendorlib'}"
 );
+
+my $makemakerflags = "DESTDIR=$destdir INSTALLDIRS=vendor";
+my $buildflags = "--destdir $destdir --installdirs vendor";
+#In case the paths are different, sub our prefix for perls prefix
+if ($PERL_HOME ne $prefix)
+{
+  foreach my $path (@myINC) {
+	$path =~ s/$PERL_HOME/$prefix/;
+  }
+  $makemakerflags .= " PREFIX=$prefix";
+  $buildflags .= " --prefix $prefix";
+}
 # same as myINC, but one string with "-I" separators
 my $myenv = join '', map { '-I' . $_ . ' ' } @myINC;
-my $myperl = "$^X $myenv";
+my $myperl = "$PERL_HOME/bin/perl $myenv";
 my $mymkf  = "FULLPERL=\"$myperl\" PERL=\"$myperl\"";
 
 # Setup a work directory for cpan and an installation target directory
@@ -80,13 +97,12 @@ $conf->set_conf(
     cpantest => 0,
     allow_build_interactivity => 0,
     base => "$cwd/cpanplus",
-    makemakerflags => "DESTDIR=$destdir INSTALLDIRS=vendor",
+    makemakerflags => "$makemakerflags",
     makeflags => "$mymkf",
-    buildflags => "--destdir $destdir --installdirs vendor",
+    buildflags => "$buildflags",
     prefer_makefile => 0,
     lib => [@myINC]
 );
-
 
 # clear out the sudo setting, otherwide it will run sudo
 $conf->set_program( sudo => undef );
@@ -231,7 +247,7 @@ $cb->install(
 # Deal with some modules that think they are "special"
 # Perl template toolkit needs a extras prefix defined
 $conf->set_conf( makeflags => 
-    "$mymkf TT_PREFIX=$destdir$Config{'prefix'}/share/tt2extras TT_ACCEPT=1" );
+    "$mymkf TT_PREFIX=$destdir$prefix/share/tt2extras TT_ACCEPT=1" );
 $cb->install( modules => [ qw( Template ) ] ) || die "install of Template failed";
 # The DBI Plugin, specifying perl worked....
 # another weird thing is you can't run Template and Template::Plugin:DBI at the same time

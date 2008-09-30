@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!@PERL_HOME@/bin/perl
 
 # turn on Perl's safety features
 use strict;
@@ -16,7 +16,7 @@ my $conf = $cb->configure_object;
 $conf->set_conf(
     hosts => [ {
         'scheme' => 'file',
-        'path' => "$Config{'prefix'}/share/perlmod_core/cpan"
+        'path' => "@prefix@/share/perlmod_core/cpan"
     } ]);
 
 # sort out what's installed by release tarball
