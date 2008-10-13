@@ -3,6 +3,8 @@
 rm -rf autom4te.cache aclocal.m4 config cpanplus DESTDIR get_cpan_STDIN.txt
 # Now recreate those machine made files and collect the CPAN tarballs
 autoreconf -i
-./configure
+perl_path=$(which perl | sed -e 's,/bin/perl,,')
+echo "Using perl in path ${perl_path}"
+./configure --prefix=/usr/local --with-perl=${perl_path}
 # package generated and man made stuff into a tarball
 make dist

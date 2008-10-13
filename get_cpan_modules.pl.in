@@ -204,7 +204,7 @@ $cb->install(
         Digest::HMAC
         Digest::MD2
         Digest::SHA1
-        FCGI 
+        FCGI
         Getopt::Mixed
         Getopt::Long
         Graph
@@ -216,10 +216,12 @@ $cb->install(
         Net::Daemon
         Log::Log4perl
         Math::Bezier
+        Net::SFTP
         Net::SNMP
         Net::Telnet
         Perl::Tidy
         RPC::PlServer
+        Shell::EnvImporter
         Sort::Versions
         Spreadsheet::SimpleExcel
         Spreadsheet::Perl
@@ -283,7 +285,7 @@ $cb->install(
 # Doesn't specify DBI dependency and doesn't test
 $conf->set_conf( skiptest => 1 );
 $cb->install(
-    modules => [ qw( DBIx::Recordset) ],
+    modules => [ qw( DBIx::Recordset ) ],
     perl => $myperl) || die "install of DBIx::Recordset failed";
 $conf->set_conf( skiptest => 0 );
 

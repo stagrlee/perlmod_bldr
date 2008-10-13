@@ -44,7 +44,7 @@ install-data-hook: get_cpan_STDIN.txt
 	./get_cpan_modules.pl < get_cpan_STDIN.txt; \
 	rsync -qr $(srcdir)/cpan $(DESTDIR)$(pkgdatadir); \
 	find $(DESTDIR)$(pkgdatadir) -name "*tar.gz" |xargs chmod 664; \
-	pushd ${mandir}; \
+	pushd ${PERL_HOME}/share/man; \
 	for i in $$(find . -type f -print); do \
 	  if test -f $$i && test -e ${DESTDIR}${mandir}/$$i; then \
 	    echo "Removing ${DESTDIR}${mandir}/$$i"; \
