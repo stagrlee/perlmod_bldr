@@ -25,6 +25,7 @@ get_cpan_STDIN.txt:
 # Note, this runs before the tarball release is created.
 dist-hook: get_cpan_STDIN.txt
 	set -e; \
+	chmod +x get_cpan_modules.pl; \
 	./get_cpan_modules.pl --net < get_cpan_STDIN.txt; \
 	rsync -qr $(srcdir)/cpanplus/authors $(distdir)/cpan/; \
 	mkdir $(distdir)/cpan/modules; \
@@ -41,6 +42,7 @@ dist-hook: get_cpan_STDIN.txt
 # conflicts arise.
 install-data-hook: get_cpan_STDIN.txt
 	set -e; \
+	chmod +x get_cpan_modules.pl; \
 	./get_cpan_modules.pl < get_cpan_STDIN.txt; \
 	rsync -qr $(srcdir)/cpan $(DESTDIR)$(pkgdatadir); \
 	find $(DESTDIR)$(pkgdatadir) -name "*tar.gz" |xargs chmod 664; \
