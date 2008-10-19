@@ -137,11 +137,27 @@ foreach my $modname ( @checklist )
 die "\nI do not yet support building modules that are already installed..." if ( $weregonnadie );
 print "*** Looks OK ***\n\n";
 
+
 # Start installation
+
+
+# The secure FTP perl module pulls in a bunch of dependencies including
+# Math::GMP which needs libgmp.so which isn't distributed on Mac
+# It doesn't take LIBS or LDDLFLAGS like a good Makefile.PL so it is hacked
+$cb->fetch( modules => [ qw( Math::GMP) ]) || die "fetch of GMP failed";
+$cb->extract( modules => [ qw( Math::GMP) ]) || die "extract of GMP failed";
+system("patch --directory=cpanplus/$Config{'version'}/build -p0 < ./Math-GMP-2.05.patch")
+    == 0 || die "Math::GMP patch failed";
+$cb->install(
+    modules => [ qw( Math::GMP ) ],
+    perl => $myperl) || die "install of Math::GMP failed";
+
+
+# Mac::Carbon is an unfortunate dependency for Perl Template Toolkit
+# as its test phase fails and its arch specific.
 $conf->set_conf( skiptest => 1 );
 if ( "$Config{ 'osname' }" eq 'darwin' )
-{   # Mac::Carbon is an unfortunate dependency for Perl Template Toolkit
-    # as its test phase fails and its arch specific.
+{
     $cb->install( modules => [ qw(Mac::Carbon) ]) || die "install of Carbon failed";
 }
 else
@@ -149,7 +165,11 @@ else
     $cb->fetch( modules => [ qw( Mac::Carbon) ]) || die "fetch of Carbon failed";
 }
 # IPC::Shareable doesn't test
-$cb->install( modules => [ qw(IPC::Shareable Convert::IBM390 URI) ]) || die "install of IPC::Shareable failed";
+# Crypte::DH goes into infinite loop
+# Math::Pari dies
+$cb->install( modules => [ qw(IPC::Shareable Convert::IBM390 URI 
+    Crypt::Random Shell::EnvImporter) ])
+    || die "install of IPC::Shareable failed";
 $conf->set_conf( skiptest => 0 );
 
 # Think I have the testers working, but the ordering is wonky for some reason,
@@ -166,6 +186,7 @@ $cb->install( modules => [ qw(DateTime DateTime::Format::Mail) ])
 $conf->set_conf( prefer_makefile => 1 );
 $cb->install( modules => [ qw(Class::ErrorHandler Test::Class Text::ASCIITable) ]) || die "install of Class::ErrorHandler failed";
 $conf->set_conf( prefer_makefile => 0 );
+
 
 print "*** Big List ***\n\n";
 # you are all set-up, let CPAN do its thing
@@ -244,6 +265,7 @@ $cb->install(
     ) ],
     perl => $myperl ) || die "install of big list failed";
 
+
 # Deal with some modules that think they are "special"
 # Perl template toolkit needs a extras prefix defined
 $conf->set_conf( makeflags => 
@@ -280,16 +302,11 @@ $cb->install(
     ) ],
     perl => $myperl) || die "install of 2nd list failed";
 
+
+
 # Doesn't specify DBI dependency and doesn't test
 $conf->set_conf( skiptest => 1 );
 $cb->install(
-    modules => [ qw( DBIx::Recordset ) ],
+    modules => [ qw( DBIx::Recordset Net::SFTP ) ],
     perl => $myperl) || die "install of DBIx::Recordset failed";
-
-$cb->install(
-    modules => [ qw(
-        Shell::EnvImporter
-        Net::SFTP
-    ) ],
-    perl => $myperl) || die "install of add list failed";
 $conf->set_conf( skiptest => 0 );

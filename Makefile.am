@@ -42,7 +42,7 @@ dist-hook: get_cpan_STDIN.txt
 # conflicts arise.
 install-data-hook: get_cpan_STDIN.txt
 	set -e; \
-	chmod +x get_cpan_modules.pl; \
+	chmod +x *.pl; \
 	./get_cpan_modules.pl < get_cpan_STDIN.txt; \
 	rsync -qr $(srcdir)/cpan $(DESTDIR)$(pkgdatadir); \
 	find $(DESTDIR)$(pkgdatadir) -name "*tar.gz" |xargs chmod 664; \
