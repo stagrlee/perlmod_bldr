@@ -1,0 +1,24 @@
+diff -Nru Math-GMP-2.05.orig/GMP.xs Math-GMP-2.05/GMP.xs
+--- Math-GMP-2.05.orig/GMP.xs	2008-10-18 16:59:41.000000000 -0500
++++ Math-GMP-2.05/GMP.xs	2008-10-18 17:02:34.000000000 -0500
+@@ -1,7 +1,7 @@
+ #include "EXTERN.h"
+ #include "perl.h"
+ #include "XSUB.h"
+-#include "gmp.h"
++#include <@GMP_HOME@/include/gmp.h>
+ 
+ /*
+ Math::GMP, a Perl module for high-speed arbitrary size integer
+diff -Nru Math-GMP-2.05.orig/Makefile.PL Math-GMP-2.05/Makefile.PL
+--- Math-GMP-2.05.orig/Makefile.PL	2008-10-18 16:59:41.000000000 -0500
++++ Math-GMP-2.05/Makefile.PL	2008-10-18 17:00:48.000000000 -0500
+@@ -8,7 +8,7 @@
+ 	(
+ 	 'NAME'	        => 'Math::GMP',
+ 	 'VERSION_FROM' => 'lib/Math/GMP.pm',
+-	 'LIBS'	        => ['-lgmp'],
++	 'LIBS'	        => ['-L@GMP_HOME@/lib -lgmp'],
+ 	 'NO_META'      => 1,
+ 	 );
+ 
