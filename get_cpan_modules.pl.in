@@ -42,6 +42,13 @@ mkpath ( "$cwd/cpanplus/custom-sources" ); # stops a warning msg
 my $net = '';
 my $result = GetOptions ( "net" => \$net );
 
+# Catch this edge condition which causes odd things to happen
+if ( $Config{'vendorlib'} eq "" || $Config{'vendorarch'} eq "" )
+{
+    die "***\n*** Your version of perl was not compiled with \"-Dvendorprefix\"!!!\n***\n";
+}
+
+
 # When CPAN starts installing modules into the staged install (DESTDIR) 
 # directory, the module search path will need to be extended to include
 # the new modules.  This staged dir needs to get specified all over the
@@ -176,7 +183,7 @@ $conf->set_conf( skiptest => 0 );
 # circular? missing dependencies?  DateTime depends on DateTime::TimeZone, but, 
 # DateTime::TimeZone tests depend on DateTime, so circulars do exist.
 $cb->install( modules => [ qw(Devel::Symdump Class::Singleton Params::Validate) ]) || die "SYMDUMP install failed";
-$cb->install( modules => [ qw(LWP XML::Parser) ]) || die "install of LWP failed";
+$cb->install( modules => [ qw(LWP XML::Parser List::MoreUtils) ]) || die "install of LWP failed";
 $cb->install( modules => [ qw(DateTime::TimeZone Test::Pod Test::Pod::Coverage) ]) 
     || die "install of DateTime::Timezone failed";
 $cb->install( modules => [ qw(DateTime DateTime::Format::Mail) ])
