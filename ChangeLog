@@ -1,4 +1,4 @@
-0.4.2 : 17Oct08 : Bug fixes
+0.4.2 : 19Oct08 : Bug fixes, Patch Math::GMP, check for -Dvendorprefix
 0.4.1 : 09Oct08 : Add Shell::EnvImporter and Net::SFTP modules, and support for --with-perl option; made scripts .in to support automake.
 0.4   : 10Sep08 : More generic manpage conflict loop and open sourced
 0.3.5 : 29Aug08 : Fix vendor_site install conflict with manpages.

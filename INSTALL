@@ -7,7 +7,12 @@ Basic MIT license
 Basic Installation
 ==================
 
-  1. ./configure --prefix=/usr/local --with-perl=/usr/local
+You need a PERL package compiled with -Dvendorprefix=/some/directory
+Its best to not use the perl that came with your Mac or Linux distro.
+On mac, you need to install the GMP big number library.
+
+  1. ./configure --prefix=/usr/local --with-perl=/usr/local \
+           --with-gmp=/usr/local
 
   2. Type `make' to build the package.
 
@@ -18,3 +23,15 @@ Basic Installation
 
          make DESTDIR=/tmp/pkgdir install
 
+
+Basic Development
+=================
+
+Add a perl module to get_cpan_modules.pl.in, or if you just want the 
+latest perl modules from cpan you can skip the edit.  Update the configure.ac
+version number and update the ChangeLog file making note of what the new
+release is for.  Then type
+
+   1.  ./configure_pkg.sh
+
+which will create a new tarball release.  Update and tag the git repository.

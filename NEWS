@@ -3,9 +3,11 @@ perlmod_bldr -- See ChangeLog
 Copyright (C) 2008, Lee Thompson
 Basic MIT license
 
-Oct 08 - Modules and bug fixes from Mike Espe
+Oct 08 - Modules and bug fixes from Mike Espe.  Lee figured out how to
+         patch a buggy perl module (Math::GMP).  Check for -Dvendorprefix.
 Sep 08 - Open Sourced under basic MIT license on GITHUB.  Lee wrote
-         a more generic man page filter
+         a more generic man page filter. Mike figured out how to install
+         the modules outside the PERL prefix.
 Aug 08 - Mike Espe found the perl package and the perlmod_core package
          were conflicting on man pages and filtered those files out
 May 08 - Mike Espe contributed patches to move installation into the
