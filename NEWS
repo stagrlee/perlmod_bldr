@@ -5,6 +5,8 @@ Basic MIT license
 
 Oct 08 - Modules and bug fixes from Mike Espe.  Lee figured out how to
          patch a buggy perl module (Math::GMP).  Check for -Dvendorprefix.
+         Mike then removed Net::SFTP and Math::GMP since they were not
+         needed and would not build without accessing the internet.
 Sep 08 - Open Sourced under basic MIT license on GITHUB.  Lee wrote
          a more generic man page filter. Mike figured out how to install
          the modules outside the PERL prefix.

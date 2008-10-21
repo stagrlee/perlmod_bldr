@@ -1,6 +1,7 @@
 Thanks to:
 
 Mike Espe  http://github.com/sfmike
+   0.4.3 - remove Net::SFTP - bad module
    0.4.2 - bug fixes
    0.4.1 - module and installing modules outside PERL's prefix directory
    0.4.0 - sitelib to vendorlib

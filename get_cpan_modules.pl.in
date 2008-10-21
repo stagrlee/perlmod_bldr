@@ -93,7 +93,7 @@ $conf->set_conf(
     hosts => ($net) ? [ {
         'scheme' => 'http',
         'path' => '/',
-        'host' => 'cpan.mirror.facebook.com'
+        'host' => 'cpan.yahoo.com'
     } ] :
     [ {
         'scheme' => 'file',
@@ -148,16 +148,15 @@ print "*** Looks OK ***\n\n";
 # Start installation
 
 
-# The secure FTP perl module pulls in a bunch of dependencies including
-# Math::GMP which needs libgmp.so which isn't distributed on Mac
-# It doesn't take LIBS or LDDLFLAGS like a good Makefile.PL so it is hacked
-$cb->fetch( modules => [ qw( Math::GMP) ]) || die "fetch of GMP failed";
-$cb->extract( modules => [ qw( Math::GMP) ]) || die "extract of GMP failed";
-system("patch --directory=cpanplus/$Config{'version'}/build -p0 < ./Math-GMP-2.05.patch")
-    == 0 || die "Math::GMP patch failed";
-$cb->install(
-    modules => [ qw( Math::GMP ) ],
-    perl => $myperl) || die "install of Math::GMP failed";
+# Below is an example of how to fetch, extract and patch a module as part
+# of he build process
+#$cb->fetch( modules => [ qw( X::Y ) ]) || die "fetch of X::Y failed";
+#$cb->extract( modules => [ qw( X:Y ) ]) || die "extract of X::Y failed";
+#system("patch --directory=cpanplus/$Config{'version'}/build -p0 < ./X-Y-ver.patch")
+#    == 0 || die "X:Y patch failed";
+#$cb->install(
+#    modules => [ qw( X:Y ) ],
+#    perl => $myperl) || die "install of X:Y failed";
 
 
 # Mac::Carbon is an unfortunate dependency for Perl Template Toolkit
@@ -171,12 +170,10 @@ else
 {   # Go ahead and fetch it so it will build on Lee's miserable mac later
     $cb->fetch( modules => [ qw( Mac::Carbon) ]) || die "fetch of Carbon failed";
 }
-# IPC::Shareable doesn't test
-# Crypte::DH goes into infinite loop
-# Math::Pari dies
+# IPC::Shareable, Convert::IBM390 and Shell::EnvImporter don't test
 $cb->install( modules => [ qw(IPC::Shareable Convert::IBM390 URI 
-    Crypt::Random Shell::EnvImporter) ])
-    || die "install of IPC::Shareable failed";
+    Shell::EnvImporter Net::SSH::Expect ) ])
+    || die "install of untestable modules failed";
 $conf->set_conf( skiptest => 0 );
 
 # Think I have the testers working, but the ordering is wonky for some reason,
@@ -314,6 +311,6 @@ $cb->install(
 # Doesn't specify DBI dependency and doesn't test
 $conf->set_conf( skiptest => 1 );
 $cb->install(
-    modules => [ qw( DBIx::Recordset Net::SFTP ) ],
+    modules => [ qw( DBIx::Recordset ) ],
     perl => $myperl) || die "install of DBIx::Recordset failed";
 $conf->set_conf( skiptest => 0 );
