@@ -2,7 +2,7 @@
 # Basic MIT license
 
 AC_INIT([perlmod_core],
-        [0.4.3],
+        [0.4.4],
         [Lee Thompson bm55b@yahoo.com])
 AC_COPYRIGHT([Copyright (C) 2008, Lee Thompson])
 AC_CONFIG_AUX_DIR(config)
