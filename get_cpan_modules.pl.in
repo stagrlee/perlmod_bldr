@@ -53,7 +53,7 @@ if ( $Config{'vendorlib'} eq "" || $Config{'vendorarch'} eq "" )
 # directory, the module search path will need to be extended to include
 # the new modules.  This staged dir needs to get specified all over the
 # place in order for installs and tests to work
-my $destdir= $DESTDIR ? $DESTDIR : "$cwd/DESTDIR";
+my $destdir= $DESTDIR ? $DESTDIR : "/";
 my $PERL_HOME = "@PERL_HOME@";
 my $prefix = "@prefix@";
 my @myINC = (
