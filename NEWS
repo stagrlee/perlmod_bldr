@@ -3,6 +3,7 @@ perlmod_bldr -- See ChangeLog
 Copyright (C) 2008, Lee Thompson
 Basic MIT license
 
+Jan 09 - Added DateTime::Format::Strptime module.
 Oct 08 - Modules and bug fixes from Mike Espe.  Lee figured out how to
          patch a buggy perl module (Math::GMP).  Check for -Dvendorprefix.
          Mike then removed Net::SFTP and Math::GMP since they were not

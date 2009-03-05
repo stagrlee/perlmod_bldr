@@ -52,8 +52,10 @@ if ( $Config{'vendorlib'} eq "" || $Config{'vendorarch'} eq "" )
 # When CPAN starts installing modules into the staged install (DESTDIR) 
 # directory, the module search path will need to be extended to include
 # the new modules.  This staged dir needs to get specified all over the
-# place in order for installs and tests to work
-my $destdir= $DESTDIR ? $DESTDIR : "/";
+# place in order for installs and tests to work.  When creating the 
+# release form the net, install everything to a new directory called
+# DESTDIR.
+my $destdir= $DESTDIR ? $DESTDIR : ($net) ? "$cwd/DESTDIR" : "/";
 my $PERL_HOME = "@PERL_HOME@";
 my $prefix = "@prefix@";
 my @myINC = (
@@ -223,6 +225,7 @@ $cb->install(
         Date::Calc
         Date::Format
         Date::Manip
+        DateTime::Format::Strptime
         DBI
         Devel::Loaded
         Digest::BubbleBabble
