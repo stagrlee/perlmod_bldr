@@ -243,12 +243,15 @@ $cb->install(
         Heap
         IPC::Run
         IPC::Shareable
-        Net::Daemon
         Log::Log4perl
         Math::Bezier
         MIME::Lite
-        Net::SNMP
+        Net::Daemon
+        Net::SCP
+        Net::SCP::Expect
         Net::SFTP::Foreign
+        Net::SNMP
+        Net::SSH
         Net::Telnet
         Perl::Tidy
         RPC::PlServer

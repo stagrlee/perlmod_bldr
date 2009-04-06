@@ -1,3 +1,5 @@
+      :  6Apr09 : Add other common Net modules that may be useful; Net::SCP,
+                  Net::SCP::Expect, Net::SNMP, Net::SSH
 0.4.7 :  3Apr09 : Added Net::SFTP::Foreign, alternative to Net::SFTP; and
                   Email::Date, MIME::List, XML::Writer
 0.4.6 :  3Mar09 : Added DateTime::Format::Strptime module.
