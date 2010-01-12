@@ -272,6 +272,7 @@ $cb->install(
         XML::Generator
         XML::SAX
         XML::SemanticDiff
+        XML::Bare
         XML::Simple
         XML::Twig
         XML::Writer
